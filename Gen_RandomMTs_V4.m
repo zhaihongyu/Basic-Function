@@ -1,6 +1,6 @@
 % Using different ratio of the 4 kinds of basic MT to generate random MT
 % 2015-10-19
-function [New_RandomMts_6xN]=Gen_RandomMTs_V4()
+function [Final_RandomMts_6xN]=Gen_RandomMTs_V4()
 % 4 basic seismic moment tensors 2015-4-27 %
 M_ISO_Pos=2/3*[1 0 0;0 1 0;0 0 1];
 M_ISO_Neg=-2/3*[1 0 0;0 1 0;0 0 1];
@@ -52,19 +52,12 @@ for i=1:size(DC_Ratio,2)
         %}
     end
 end
-% Adding random noise to the random moment tensor 2015-6-17 %
-%
-Per_Coe=0.05;
-RandomMTs_Num=size(RandomMts_6xN,2);
-RandMT_ValueOri=rand(6,RandomMTs_Num)*Per_Coe;
-RandomMts_6xN=RandomMts_6xN+RandMT_ValueOri;
-%}
 % Delete the same moment tensor
 Zero_MT=zeros(6,1);
 for i=1:Count_Num
     for j=i+1:Count_Num
         Error=sum(abs(RandomMts_6xN(:,i)-RandomMts_6xN(:,j)));
-        if Error<=2.5E-1
+        if Error<=1E-1
             RandomMts_6xN(:,j)=Zero_MT;
         end
         
@@ -74,12 +67,34 @@ RandomMts_6xN_Sum=sum(abs(RandomMts_6xN));
 [Idx]=find(RandomMts_6xN_Sum>0);
 New_RandomMts_6xN=RandomMts_6xN(:,Idx);
 
+% Adding random noise to the random moment tensor 2015-6-17 %
+%
+Per_Coe=0.05;
+RandomMTs_Num=size(New_RandomMts_6xN,2);
+RandMT_ValueOri=rand(6,RandomMTs_Num)*Per_Coe;
+New_RandomMts_6xN=New_RandomMts_6xN+RandMT_ValueOri;
+%}
+% Delete the same moment tensor
+Zero_MT=zeros(6,1);
+for i=1:RandomMTs_Num
+    for j=i+1:RandomMTs_Num
+        Error=sum(abs(New_RandomMts_6xN(:,i)-New_RandomMts_6xN(:,j)));
+        if Error<=2.5E-1
+            New_RandomMts_6xN(:,j)=Zero_MT;
+        end
+        
+    end
+end
+New_RandomMts_6xN_Sum=sum(abs(New_RandomMts_6xN));
+[Idx]=find(New_RandomMts_6xN_Sum>0);
+Final_RandomMts_6xN=New_RandomMts_6xN(:,Idx);
+
 % 
 f2=figure();
 set(f2,'position',[0 0 900 700])
 hold on;
 % Transform the T-k parameters to x-y coordinates
-[RandomTk]=MT_To_Tk(New_RandomMts_6xN);
+[RandomTk]=MT_To_Tk(Final_RandomMts_6xN);
 [RandomTk_XY]=Tk_To_XY(RandomTk);
 
 %         Plot the Source-Type diagram

@@ -1,4 +1,6 @@
 % Test the decomposition program
+clc 
+clear all
 
 % Generate random MTs
 [RandomMts]=Gen_RandomMTs_V4();
