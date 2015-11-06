@@ -17,8 +17,8 @@ end
 
 % Plot the percent of all MTs
 figure
-MT_Idx=1:MTs_Num;
-plot(MT_Idx,Percent_MTs','*');
+% MT_Idx=1:MTs_Num;
+% plot(MT_Idx,Percent_MTs','*');
 
 figure
 subplot(1,3,1)

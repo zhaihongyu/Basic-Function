@@ -62,7 +62,46 @@ for i=1:NegCLVDs_Num
 end
 
 % Plot the percent of all MTs
-Plot_MT_Decom('ISO',Percent_ISOs)
-Plot_MT_Decom('DC',Percent_DCs)
-Plot_MT_Decom('PosCLVD',Percent_PosCLVDs)
-Plot_MT_Decom('NegCLVD',Percent_NegCLVDs)
+figure
+hold on
+Title_ISO='MT components of ISO';
+FaceColor={'r','g','b'};
+XLabel={'ISO Percent [%]','DC Percent [%]','CLVD-Com [%]'};
+set(gcf,'PaperPositionMode','manual','PaperUnits','centimeters','PaperPosition',[0 0 10 6]);
+for i=1:3
+    subplot(1,3,i)
+    Bin_Num=7;
+    h1=histogram(Percent_ISOs(:,i),Bin_Num);
+    set(h1,'FaceColor',FaceColor{i})
+    % Set the axis properties
+    XTick_Int=(h1.BinLimits(2)-h1.BinLimits(1))/(Bin_Num+1);
+    XTick=h1.BinLimits(1):XTick_Int:h1.BinLimits(2);
+    XTick_Label=XTick*100;
+    set(gca,'XLim',h1.BinLimits,'XTick',XTick,'XTickLabel',XTick_Label);
+    xlabel();
+end
+print('-r300','-dtiff',Title_ISO)
+
+figure
+subplot(1,3,1)
+hist(Percent_DCs(:,1),10);
+subplot(1,3,2)
+hist(Percent_DCs(:,2),10);
+subplot(1,3,3)
+hist(Percent_DCs(:,3),10);
+
+figure
+subplot(1,3,1)
+hist(Percent_PosCLVDs(:,1),10);
+subplot(1,3,2)
+hist(Percent_PosCLVDs(:,2),10);
+subplot(1,3,3)
+hist(Percent_PosCLVDs(:,3),10);
+
+figure
+subplot(1,3,1)
+hist(Percent_NegCLVDs(:,1),10);
+subplot(1,3,2)
+hist(Percent_NegCLVDs(:,2),10);
+subplot(1,3,3)
+hist(Percent_NegCLVDs(:,3),10);
