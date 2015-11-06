@@ -1,4 +1,6 @@
 % Using different ratio of the 4 kinds of basic MT to generate random MT
+% In this version, we divided the MT into ISO- class and ISO+ class. 
+% Then generate the random MTs class by class
 % 2015-10-19
 function [Final_RandomMts_6xN]=Gen_RandomMTs_V3()
 % 4 basic seismic moment tensors 2015-4-27 %

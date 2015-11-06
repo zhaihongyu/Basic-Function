@@ -1,5 +1,7 @@
 % Using different ratio of the 4 kinds of basic MT to generate random MT
-% 2015-10-19
+% In this version, we divided the MT into CLVD- class and CLVD+ class. 
+% Then generate the random MTs class by class
+% 2015-10-23
 function [New_RandomMts_6xN]=Gen_RandomMTs_V4()
 % 4 basic seismic moment tensors 2015-4-27 %
 M_ISO_Pos=2/3*[1 0 0;0 1 0;0 0 1];
