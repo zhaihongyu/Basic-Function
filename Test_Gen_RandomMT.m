@@ -3,5 +3,9 @@ clc
 clear all
 close all
 
-Random_Num=40;
-Gen_Random_ISO();
+
+% Gen_Random_ISO();
+% Gen_Random_DC();
+Gen_Random_PosCLVD()
+Gen_Random_NegCLVD()
+
